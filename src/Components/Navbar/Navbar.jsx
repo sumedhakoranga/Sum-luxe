@@ -1,23 +1,27 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useRef, useState } from 'react';
 import './Navbar.css';
-import logo from '../Assets/logo.png';
-import { faShoppingBag, faUser } from '@fortawesome/free-solid-svg-icons';
+import cart_icon from '../Assets/cart_icon.png';
+import { faUser } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import nav_dropdown from '../Assets/navbar_dropdown.png'
 import { Link } from 'react-router-dom';
 import { ShopContext } from '../../Context/ShopContext';
 
 const Navbar = () => {
   const [menu, setMenu] = useState("shop");
   const {getTotalCartItems} = useContext(ShopContext);
+  const menuRef = useRef();
+
+  const dropdown_toggle = (e) =>{
+    menuRef.current.classList.toggle('nav-menu-visible')
+    e.target.classList.toggle('open');
+  }
 
   return (
     <div className='navbar'>
-      {/* <p>✦Sumélux</p> */}
-      <div className='nav-logo'>
-        <img src={logo} alt=""/>
-        <p>✦Sumélux</p>
-      </div>
-      <ul className="nav-menu">
+      <p>💥Sumélux</p>
+      <img className='nav-dropdown' onClick={dropdown_toggle} src={nav_dropdown} alt="" />
+      <ul ref={menuRef} className="nav-menu">
         <li onClick={() => { setMenu("shop") }}>
           <Link style={{textDecoration:'none'}} to='/'>Shop</Link>
           {menu === "shop" ? <hr /> : <></>}
@@ -36,8 +40,8 @@ const Navbar = () => {
         </li>
       </ul>
       <div className="nav-login-cart">
-        <Link to='/login'><button><FontAwesomeIcon icon={faUser}/>  Login</button></Link>
-        <Link to='/cart'><FontAwesomeIcon icon={faShoppingBag} /></Link>
+        {localStorage.getItem('auth-token')? <button onClick={()=>{localStorage.removeItem('auth-token'); window.location.replace('/')}}>Logout</button>:<Link to='/login'><button><FontAwesomeIcon icon={faUser}/>  Login</button></Link>}
+        <Link to='/cart'><img src={cart_icon} alt="" /></Link>
         <div className="nav-cart-count">{getTotalCartItems()}</div>
       </div>
     </div>
