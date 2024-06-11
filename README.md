@@ -1,4 +1,10 @@
-# E-commerce Website
+# E-commerce
+
+https://github.com/sumedhakoranga/Sum-luxe/assets/124348875/2e075f72-c7cb-4cd5-a419-eb37de906faf
+
+ Website
+
+
 
 An e-commerce website built using the MERN stack, featuring authentication, authorization, and a fully functional backend.
 
